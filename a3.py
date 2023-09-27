@@ -243,7 +243,9 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("who acted in %"), actors_by_title),
     (str.split("when was % made"), year_by_title),
     (str.split("in what movies did % appear"), title_by_actor),
-    (str.split("in what movies did % act"), title_by_actor), # Custom pa for pa list (Step 3)
+    (str.split("in what movies did % act %"), title_by_actor), # Custom pa for pa list (Step 3)
+    (str.split("in what movies did % act in"), title_by_actor), # Custom pa for pa list (Step 3)
+
     (["bye"], bye_action),
 ]
 
@@ -352,5 +354,8 @@ if __name__ == "__main__":
     assert sorted(
         search_pa_list(["in", "what", "movies", "did", "linda", "blair", "act"])
     ) == sorted(["the exorcist"]), "failed custom assert test" # Custom pa for pa list (Step 3)
+    assert sorted(
+        search_pa_list(["in", "what", "movies", "did", "linda", "blair", "act", "in"])
+    ) == sorted(["the exorcist"]), "failed custom assert test 2" # Custom pa for pa list (Step 3)
 
     print("All tests passed!")
