@@ -196,7 +196,7 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
-    
+
     for i in range(len(movie_db)):
             if((movie_db[i])[0] == matches[0]):
                 return [(movie_db[i])[2]]
@@ -319,7 +319,7 @@ if __name__ == "__main__":
         ["casablanca", "citizen kane", "gone with the wind", "metropolis"]
     ), "failed title_before_year test"
     assert sorted(title_after_year(["1990"])) == sorted(
-        ["boyz n the hood", "dead again", "the crying game", "flirting", "malcolm x"]
+        ["boyz n the hood", "dead again", "the crying game", "flirting", "malcolm x", "hum aapke hain koun"]
     ), "failed title_after_year test"
     assert sorted(director_by_title(["jaws"])) == sorted(
         ["steven spielberg"]
