@@ -434,5 +434,17 @@ movie_db: List[Tuple[str, str, int, List[str]]] = [
             "delroy lindo",
             "spike lee",
         ],
+    ),
+    (
+        "hum aapke hain koun",
+        "sooraj barjatya",
+        1994,
+        [
+           "madhuri dixit", 
+           "salman khan",
+           "renuka shahane",
+           "mohnish bahl",
+           "anupam kher",
+        ],
     )
 ]
