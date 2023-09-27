@@ -102,7 +102,7 @@ def title_before_year(matches: List[str]) -> List[str]:
 
     toReturn = []
 
-    for x in range(1900, int(matches[0])):
+    for x in range(1888, int(matches[0])):
         for i in range(len(movie_db)):
             if(int((movie_db[i])[2]) == int((x))):
                 toReturn.append((movie_db[i])[0])
@@ -124,7 +124,7 @@ def title_after_year(matches: List[str]) -> List[str]:
 
     toReturn = []
 
-    for x in range(int(matches[0]), 2000):
+    for x in range(int(matches[0]), 2023):
         for i in range(len(movie_db)):
             if(int((movie_db[i])[2]) == int((x))):
                 toReturn.append((movie_db[i])[0])
@@ -142,7 +142,14 @@ def director_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of 1 string, the director of the movie
     """
-    pass
+
+    toReturn = []
+
+    for i in range(len(movie_db)):
+            if((movie_db[i])[0] == matches[0]):
+                toReturn.append((movie_db[i])[1])
+
+    return toReturn
 
 
 def title_by_director(matches: List[str]) -> List[str]:
@@ -154,7 +161,13 @@ def title_by_director(matches: List[str]) -> List[str]:
     Returns:
         a list of movies titles directed by the passed in director
     """
-    pass
+    toReturn = []
+
+    for i in range(len(movie_db)):
+            if((movie_db[i])[1] == matches[0]):
+                toReturn.append((movie_db[i])[0])
+                
+    return toReturn
 
 
 def actors_by_title(matches: List[str]) -> List[str]:
@@ -166,7 +179,12 @@ def actors_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of actors who acted in the passed in title
     """
-    pass
+
+    for i in range(len(movie_db)):
+            if((movie_db[i])[0] == matches[0]):
+                return (movie_db[i])[3]
+                
+    return []
 
 
 def year_by_title(matches: List[str]) -> List[int]:
@@ -178,7 +196,11 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
-    pass
+    for i in range(len(movie_db)):
+            if((movie_db[i])[0] == matches[0]):
+                return [(movie_db[i])[2]]
+                
+    return []
 
 
 def title_by_actor(matches: List[str]) -> List[str]:
@@ -190,7 +212,15 @@ def title_by_actor(matches: List[str]) -> List[str]:
     Returns:
         a list of movie titles that the actor acted in
     """
-    pass
+
+    toReturn =  []
+
+    for i in range(len(movie_db)):
+        for x in range(len((movie_db[i])[3])):
+            if(((movie_db[i])[3])[x] == matches[0]):
+                toReturn.append(((movie_db[i])[0]))
+                
+    return toReturn
 
 
 # dummy argument is ignored and doesn't matter
@@ -213,6 +243,7 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("who acted in %"), actors_by_title),
     (str.split("when was % made"), year_by_title),
     (str.split("in what movies did % appear"), title_by_actor),
+    (str.split("in what movies did % act"), title_by_actor), # Custom pa for pa list (Step 3)
     (["bye"], bye_action),
 ]
 
@@ -229,8 +260,16 @@ def search_pa_list(src: List[str]) -> List[str]:
         a list of answers. Will be ["I don't understand"] if it finds no matches and
         ["No answers"] if it finds a match but no answers
     """
-    pass
 
+    for i in range(len(pa_list)):
+        if(match(pa_list[i][0], src) != None):
+            if(pa_list[i][1](match(pa_list[i][0], src)) == []):
+                return ["No answers"]
+            else:
+                return pa_list[i][1](match(pa_list[i][0], src))
+
+    return ["I don't understand"]
+        
 
 def query_loop() -> None:
     """The simple query loop. The try/except structure is to catch Ctrl-C or Ctrl-D
@@ -257,15 +296,15 @@ def query_loop() -> None:
 # query_loop()
 
 if __name__ == "__main__":
-    # assert isinstance(title_by_year(["1974"]), list), "title_by_year not returning a list"
-    # assert isinstance(title_by_year_range(["1970", "1972"]), list), "title_by_year_range not returning a list"
-    # assert isinstance(title_before_year(["1950"]), list), "title_before_year not returning a list"
-    # assert isinstance(title_after_year(["1990"]), list), "title_after_year not returning a list"
-    # assert isinstance(director_by_title(["jaws"]), list), "director_by_title not returning a list"
-    # assert isinstance(title_by_director(["steven spielberg"]), list), "title_by_director not returning a list"
-    # assert isinstance(actors_by_title(["jaws"]), list), "actors_by_title not returning a list"
-    # assert isinstance(year_by_title(["jaws"]), list), "year_by_title not returning a list"
-    # assert isinstance(title_by_actor(["orson welles"]), list), "title_by_actor not returning a list"
+    assert isinstance(title_by_year(["1974"]), list), "title_by_year not returning a list"
+    assert isinstance(title_by_year_range(["1970", "1972"]), list), "title_by_year_range not returning a list"
+    assert isinstance(title_before_year(["1950"]), list), "title_before_year not returning a list"
+    assert isinstance(title_after_year(["1990"]), list), "title_after_year not returning a list"
+    assert isinstance(director_by_title(["jaws"]), list), "director_by_title not returning a list"
+    assert isinstance(title_by_director(["steven spielberg"]), list), "title_by_director not returning a list"
+    assert isinstance(actors_by_title(["jaws"]), list), "actors_by_title not returning a list"
+    assert isinstance(year_by_title(["jaws"]), list), "year_by_title not returning a list"
+    assert isinstance(title_by_actor(["orson welles"]), list), "title_by_actor not returning a list"
     
     assert sorted(title_by_year(["1974"])) == sorted(
         ["amarcord", "chinatown"]
@@ -310,5 +349,8 @@ if __name__ == "__main__":
     assert sorted(
         search_pa_list(["what", "movies", "were", "made", "in", "2020"])
     ) == sorted(["No answers"]), "failed search_pa_list test 3"
+    assert sorted(
+        search_pa_list(["in", "what", "movies", "did", "linda", "blair", "act"])
+    ) == sorted(["the exorcist"]), "failed custom assert test" # Custom pa for pa list (Step 3)
 
     print("All tests passed!")
