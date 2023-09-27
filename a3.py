@@ -223,6 +223,24 @@ def title_by_actor(matches: List[str]) -> List[str]:
                 
     return toReturn
 
+def title_by_genre(matches: List[str]) -> List[str]:
+    """Finds titles of all movies that fits the given genre
+    
+    Args:
+        matches - a list of 1 string, the genre
+
+    Returns:
+        a list of movie titles that fit the given genre
+    """
+
+    toReturn = []
+
+
+    for i in range(len(movie_db)):
+        if((movie_db[i])[4] == matches[0]):
+            toReturn.append((movie_db[i])[0])
+
+    return toReturn
 
 # dummy argument is ignored and doesn't matter
 def bye_action(dummy: List[str]) -> None:
@@ -244,8 +262,7 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("who acted in %"), actors_by_title),
     (str.split("when was % made"), year_by_title),
     (str.split("in what movies did % appear"), title_by_actor),
-    (str.split("in what movies did % act %"), title_by_actor), # Custom pa for pa list (Step 3)
-    (str.split("in what movies did % act in"), title_by_actor), # Custom pa for pa list (Step 3)
+    (str.split("what movies are a _"), title_by_genre), # Custom pa for pa list (Step 3)
 
     (["bye"], bye_action),
 ]
@@ -353,10 +370,7 @@ if __name__ == "__main__":
         search_pa_list(["what", "movies", "were", "made", "in", "2020"])
     ) == sorted(["No answers"]), "failed search_pa_list test 3"
     assert sorted(
-        search_pa_list(["in", "what", "movies", "did", "linda", "blair", "act"])
-    ) == sorted(["the exorcist"]), "failed custom assert test" # Custom pa for pa list (Step 3)
-    assert sorted(
-        search_pa_list(["in", "what", "movies", "did", "linda", "blair", "act", "in"])
-    ) == sorted(["the exorcist"]), "failed custom assert test 2" # Custom pa for pa list (Step 3)
+        search_pa_list(["what", "movies", "are", "a", "romance"])
+    ) == sorted(["flirting"]), "failed search_pa_list test custom 1"
 
     print("All tests passed!")
