@@ -196,6 +196,7 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
+    
     for i in range(len(movie_db)):
             if((movie_db[i])[0] == matches[0]):
                 return [(movie_db[i])[2]]
