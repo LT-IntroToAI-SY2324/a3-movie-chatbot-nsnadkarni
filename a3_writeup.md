@@ -13,7 +13,7 @@ I added Hum Aapke Hain Koun, as it is one of my favorite bollywood movies that I
 
 3. What pattern / action did you add to the paList data structure?  Why do you think that is a useful pattern / action?
 
-I added (str.split("in what movies did % act"), title_by_actor) and (str.split("in what movies did % act in"), title_by_actor), so somebody could write "In what movies did Spike Lee act" or "In what movies did Spike Lee act in". I feel like this is useful as (str.split("in what movies did % appear"), title_by_actor), the previous title_by_actor, would not be frequently used as more people would use the phrase "act in" than "appear".
+I added a genre to each movie (I asked ChatGPT to add it to all of them so I can't 100% attest to the validity of all the genres. I did this so I didnt have to hand write a bunch of genres) and added an action and pattern to a3.py to search for these genres and return the title of the movie to the user. The pattern is (str.split("what movies are a _"), title_by_genre) so somebody could say, "What movies are a romance?" and get back the answer "flirting".
 
 4. What is chatbot would you create that would be like this?  Describe why you would create it and what it would do.
 
@@ -25,5 +25,5 @@ The most difficult portion was the search_pa_list function, as I first tried to 
 
 6. Did you write a new assert for your pattern action?
 
-Yes, I wrote one for both and I passed the asserts.
+Yes, I wrote one for my new action and it passed the assert.
 
